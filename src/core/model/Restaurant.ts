@@ -1,13 +1,5 @@
-export interface Item {
-    name: string;
-    price: string;
-    description: string;
-}
+import { Menu } from "./Menu";
 
-export interface Menu {
-    category: string;
-    items: Item[]
-}
 
 export interface Restaurant {
     id: string;

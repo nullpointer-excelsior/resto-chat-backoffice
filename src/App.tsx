@@ -9,7 +9,7 @@ import RestaurantMaintainer from './ui/pages/home/components/restaurant-maintain
 import { NotificationProvider } from './ui/shared/context/NotificationContext';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Dashboard } from "./ui/pages/home/components/dashboard/Dashboard";
-import { Menu } from "./ui/pages/home/components/menu/Menu";
+import { MenuPage } from "./ui/pages/home/components/menu/MenuPage";
 
 // declare module '@mui/material/styles' {
 //   interface Theme {
@@ -70,7 +70,7 @@ function App() {
                     <Route path="restaurant" element={<RestaurantMaintainer/>}></Route>
                     <Route path="menu" element={
                       <AuthenticatedRoute>
-                        <Menu/>
+                        <MenuPage/>
                       </AuthenticatedRoute>
                    }></Route>
                     **<Route path="dashboard" element={

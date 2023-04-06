@@ -27,7 +27,7 @@ export default function NewRestaurant() {
                 accountId: account.id,
                 callEndpoint: '',
                 chatbotName: values.chatbotName,
-                menus: null,
+                menus: [],
                 menuUrl: values.menuUrl,
                 restaurantName: values.restaurantName
             })
