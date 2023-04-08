@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import useAccountState from "../../../../state/hooks/useAccountState";
 import { accountService } from "../../../../core/services/AccountService";
 import { Button } from "@mui/material";
+import GoogleIcon from '@mui/icons-material/Google';
 
 const GoogleSignInButton = () => {
 
@@ -43,7 +44,7 @@ const GoogleSignInButton = () => {
       fullWidth
       variant="contained"
       color="secondary"
-      
+      endIcon={<GoogleIcon/>}
     >
     Iniciar sesión con Google
     </Button>

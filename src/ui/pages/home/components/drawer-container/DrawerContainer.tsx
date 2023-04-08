@@ -14,7 +14,7 @@ import Container from '@mui/material/Container';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ExitToApp from '@mui/icons-material/ExitToApp';
-import { mainListItems } from './listItems';
+import ListMenuItems from './ListMenuItems';
 import Copyright from '../../../../shared/components/Copyright';
 import { Avatar, Tooltip } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
@@ -129,15 +129,15 @@ export default function DrawerContainer({ children }) {
           </Tooltip>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={open}>
+        <Drawer variant="permanent" open={open} sx={{ backgroundColor: theme.palette.grey[900] }}>
         
           <Toolbar
             sx={{
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'flex-end',
+              backgroundColor: theme.palette.grey[900],
               px: [1],
-              
             }}
           >
             <IconButton onClick={toggleDrawer}>
@@ -150,12 +150,13 @@ export default function DrawerContainer({ children }) {
               width: theme.spacing(6),
               height: theme.spacing(6),
               margin: theme.spacing(6),
+
             }} />
           </Box>
           
           <Divider />
-          <List component="nav">
-            {mainListItems}
+          <List component="nav" >
+          <ListMenuItems/>
             <Divider sx={{ my: 1 }} />
             
           </List>
@@ -169,8 +170,7 @@ export default function DrawerContainer({ children }) {
             overflow: 'auto',
           }}
         >
-          <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4, paddingTop: theme.spacing(4), paddingBottom: theme.spacing(4) }}>
+          <Container maxWidth="md" sx={{ margin: theme.spacing(10) }}>
               { children }
               <Box sx={{ margin: 6 }}>
                 <Copyright />

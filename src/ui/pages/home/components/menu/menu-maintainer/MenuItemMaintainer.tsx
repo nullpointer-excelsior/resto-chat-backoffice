@@ -3,6 +3,7 @@ import { TextField, Button, Table, TableHead, TableRow, TableCell, TableBody, Ic
 import { Delete } from '@mui/icons-material';
 import { Menu } from '../../../../../../core/model/Menu';
 import AddIcon from '@mui/icons-material/Add';
+import SaveCancelButtons from '../../../../../shared/components/SaveCancelButtons';
 
 interface Props {
   menu: Menu;
@@ -62,7 +63,10 @@ export default function MenuItemMaintainer(props: Props) {
       </Box>
 
       <Divider sx={{ marginY: 4}}/> 
+
+      { menuItems.length === 0? <><p style={{ textAlign: 'center'}}>No hay categorias</p> <Divider sx={{ marginY: 4}}/></>: null}       
       
+      { menuItems.length > 0 ?
       <Table>
         <TableHead>
           <TableRow>
@@ -86,11 +90,10 @@ export default function MenuItemMaintainer(props: Props) {
             </TableRow>
           ))}
         </TableBody>
-      </Table>
-      <Box display="flex" justifyContent="center" sx={{ marginY: 4 }}>
-        <Button variant="contained" onClick={handleSave} sx={{ marginRight: '10px' }}>Guardar</Button>
-        <Button color="secondary" variant="outlined" onClick={onCancel}>Cancelar</Button>
-      </Box>
+      </Table>: null }
+      
+      <SaveCancelButtons onSave={handleSave} onCancel={onCancel} />
+
     </>
   );
 }

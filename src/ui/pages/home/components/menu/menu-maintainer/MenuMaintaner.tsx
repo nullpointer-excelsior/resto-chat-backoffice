@@ -3,6 +3,9 @@ import { TextField, Button, List, ListItem, ListItemText, Box, Divider } from '@
 import useRestaurantState from '../../../../../../state/hooks/useRestaurantState';
 import { Menu } from '../../../../../../core/model/Menu';
 import MenuItemMaintainer from './MenuItemMaintainer';
+import SaveCancelButtons from '../../../../../shared/components/SaveCancelButtons';
+import { restaurantService } from '../../../../../../core/services/RestaurantService';
+import { useNotification } from '../../../../../shared/context/NotificationContext';
 
 interface Props {
   menus: Menu[]
@@ -11,10 +14,12 @@ interface Props {
 export default function MenuMaintainer(props: Props) {
 
   const { menus: menuState } = props
-  const { updateMenu } = useRestaurantState()
+  const { updateMenu, restaurant } = useRestaurantState()
+  const { showNotification } = useNotification()
   // menus
   const [categoryName, setCategoryName] = useState('');
   const [menus, setMenus] = useState<Menu[]>([...menuState]);
+  const [initialMenu, setInitialState] = useState<Menu[]>([...menuState]);
   // menuitems
   const [menuToUpdate, setMenuToUpdate] = useState<Menu>(null)
 
@@ -37,15 +42,45 @@ export default function MenuMaintainer(props: Props) {
     setMenuToUpdate(menu)
   }
 
-  const handleOnSaveMenu = (menu: Menu) => {
+  const handleOnSaveMenuItem = (menu: Menu) => {
     const newMenus = menus.filter(m => m.category !== menu.category)
     setMenus([ ...newMenus, menu ])
     setMenuToUpdate(null)
   }
-  // update state
-  useEffect(() => {
-    updateMenu(menus)
-  }, [menus])
+
+  const handleOnCancelMenuItem = () => {
+    setMenuToUpdate(null)
+  }
+
+
+  const handleOnSaveMenu = () => {
+    restaurantService.update(restaurant)
+      .then(() => {
+        updateMenu(menus)
+        setInitialState([...restaurant.menus])
+        showNotification({
+          severity: 'success',
+          title: 'Successful',
+          message: `Restaurant menu updated!`,
+          duration: 5000
+        })
+      })
+      .catch(err => {
+        showNotification({
+          severity: 'error',
+          title: 'Error',
+          message: `Error actualizando menus ${err.message}`,
+          duration: 5000
+        })
+      })
+    
+  }
+
+  const handleOnCancelSaveMenu = () => {
+    // console.log('reset state', initialMenu)
+    setMenus([ ...initialMenu ])
+    // updateMenu(initialMenu)
+  }
 
 
   if (!menuToUpdate) {
@@ -67,12 +102,17 @@ export default function MenuMaintainer(props: Props) {
             </ListItem>
           ))}
         </List>
+
+        <Divider sx={{ marginY: 4}}/>  
+        
+        <SaveCancelButtons onSave={handleOnSaveMenu} onCancel={handleOnCancelSaveMenu} />
+        
       </>
     )
   }
 
   return  (
-    <MenuItemMaintainer menu={menuToUpdate} onSave={handleOnSaveMenu} onCancel={() => setMenuToUpdate(null)}/>
+    <MenuItemMaintainer menu={menuToUpdate} onSave={handleOnSaveMenuItem} onCancel={handleOnCancelMenuItem}/>
   )
 
 }
