@@ -1,6 +1,7 @@
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { Restaurant } from "../model/Restaurant";
 import { firestoreClient } from "./backend/firestore-client";
+import { Table } from "../model/Table";
 
 const COLLECTION = 'restaurants'
 
@@ -30,7 +31,16 @@ class RestaurantService {
             id: id,
             ...restaurant
         }
-        return await firestoreClient.setDocument(COLLECTION, id, restaurant).then(() => newRestaurant)
+        const defaultTable: Omit<Table, 'id'> = {
+            restaurantId: id,
+            calletAt: null,
+            isCalling: false,
+            tableNumber: 0
+        }
+        return await firestoreClient.setDocument(COLLECTION, id, restaurant)
+            .then(() => firestoreClient.addDocument('tables', defaultTable))
+            .then(tableId => console.log('Default table added', tableId))
+            .then(() => newRestaurant)
     }
 
     async update(restaurant: Restaurant) {

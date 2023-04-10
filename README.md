@@ -1,46 +1,41 @@
-# Getting Started with Create React App
+# Resto chat backoffice app
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Aplicacion gestion restaurant y menu y llamados
 
-## Available Scripts
+## Tecnologias
 
-In the project directory, you can run:
+* Node 18+
+* React
+* Material UI
+* Firebase
+* Fromik
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Ejecutar la aplicaion
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```bash
+#!/bin/bash
 
-### `npm test`
+nvm use 18
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# env
+FIREBASE_API_KEY=""
+FIREBASE_AUTH_DOMAIN=""
+FIREBASE_PROJECT_ID=""
+FIREBASE_STORAGE_BUCKET=""
+FIREBASE_MESSAGING_SENDER_ID=""
+FIREBASE_APP_ID=""
+FIREBASE_MEASUREMENT_ID=""
 
-### `npm run build`
+npm run start
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## TODO
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- [ ] validaciones, textos en inputs de formularios
+- [ ] Mantenedor mesas
+- [ ] dashboard llamado mesas
+- [ ] despligue cloud
+- [ ] mantener sesion con google
+- [ ] mejorar mantenedor restaurant
+- [ ] achicar letra para mas espacion en formularios

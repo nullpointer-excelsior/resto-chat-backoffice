@@ -56,7 +56,7 @@ export default function RestaurantForm({ title, initialValues, onSubmit }) {
   }
 
   return (
-    <Container maxWidth="sm" sx={{ padding: 4}}>
+    <Container maxWidth="sm" sx={{ padding: 4, fontSize: 10}}>
       <Formik initialValues={initialValues} onSubmit={onSubmitForm} validationSchema={validationSchema} >
         {(props: FormikProps<IRestaurantForm>) => {
           const {
@@ -70,10 +70,11 @@ export default function RestaurantForm({ title, initialValues, onSubmit }) {
           return (
             <Form>
               <FormTitle title={title} />
-              <Grid container direction="column" justifyContent="center" alignItems="center" spacing={2} rowSpacing={4}>
+              <Grid container direction="column" justifyContent="center" alignItems="center" spacing={2} rowSpacing={4} sx={{ fontSize: 10}}>
               <InputGrid>
                   <TextField
                     fullWidth
+                    size="small"
                     name="restaurantName"
                     id="restaurantName"
                     label="Restaurant Name"
@@ -96,6 +97,7 @@ export default function RestaurantForm({ title, initialValues, onSubmit }) {
                 <InputGrid>
                   <TextField
                     fullWidth
+                    size="small"
                     name="menuUrl"
                     id="menuUrl"
                     label="menu URL"
@@ -118,6 +120,7 @@ export default function RestaurantForm({ title, initialValues, onSubmit }) {
                 <InputGrid>
                   <TextField
                     fullWidth
+                    size="small"
                     name="chatbotName"
                     id="chatbotName"
                     label="Chatbot name"

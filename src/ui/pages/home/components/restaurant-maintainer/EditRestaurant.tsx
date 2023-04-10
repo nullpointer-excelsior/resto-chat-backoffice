@@ -23,7 +23,6 @@ export default function EditRestaurant() {
             const response = await restaurantService.update({
                 id: restaurant.id,
                 accountId: restaurant.accountId,
-                callEndpoint: restaurant.callEndpoint,
                 chatbotName: values.chatbotName,
                 menus: restaurant.menus,
                 menuUrl: values.menuUrl,

@@ -25,7 +25,6 @@ export default function NewRestaurant() {
         try {
             await restaurantService.create({
                 accountId: account.id,
-                callEndpoint: '',
                 chatbotName: values.chatbotName,
                 menus: [],
                 menuUrl: values.menuUrl,

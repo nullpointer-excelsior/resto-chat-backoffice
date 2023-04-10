@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { TextField, Button, Table, TableHead, TableRow, TableCell, TableBody, IconButton, Typography, Box, Divider } from '@mui/material';
-import { Delete } from '@mui/icons-material';
+import { TextField, Button, Typography, Box, Divider } from '@mui/material';
 import { Menu } from '../../../../../../core/model/Menu';
 import AddIcon from '@mui/icons-material/Add';
 import SaveCancelButtons from '../../../../../shared/components/SaveCancelButtons';
+import MenuItemTable from './MenuItemTable';
 
 interface Props {
   menu: Menu;
@@ -48,15 +48,15 @@ export default function MenuItemMaintainer(props: Props) {
       <Typography variant="h6" gutterBottom sx={{ marginTop: 4, marginBottom: 4}}>
         Productos de la categoria {menu.category}
       </Typography>
+
       <Box component="form" onSubmit={handleFormSubmit} display="flex" flexDirection="column">
-        
         <Box display="flex" gap={4}>
-          <TextField label="Nombre" name="name" value={formState.name} onChange={handleInputChange} margin="normal" required sx={{ width: '60%' }} />
-          <TextField label="Precio" name="price" value={formState.price} onChange={handleInputChange} margin="normal" required sx={{ width: '40%' }}  />
+          <TextField label="Nombre" name="name" value={formState.name} onChange={handleInputChange} margin="normal" size="small" required sx={{ width: '60%' }} />
+          <TextField label="Precio" name="price" value={formState.price} onChange={handleInputChange} margin="normal" size="small" required sx={{ width: '40%' }}  />
         </Box>
         <Box display="flex" gap={2} alignItems="center">
-          <TextField label="Descripción" name="description" value={formState.description} onChange={handleInputChange} margin="normal" multiline sx={{ width: '80%', height: '100%' }}  />
-          <Button variant="contained" type="submit" startIcon={<AddIcon />} >
+          <TextField label="Descripción" name="description" value={formState.description} onChange={handleInputChange} margin="normal" size="small" multiline sx={{ width: '80%', height: '100%' }}  />
+          <Button variant="contained"  type="submit" startIcon={<AddIcon />} >
             Agregar
           </Button>
         </Box>
@@ -64,33 +64,7 @@ export default function MenuItemMaintainer(props: Props) {
 
       <Divider sx={{ marginY: 4}}/> 
 
-      { menuItems.length === 0? <><p style={{ textAlign: 'center'}}>No hay categorias</p> <Divider sx={{ marginY: 4}}/></>: null}       
-      
-      { menuItems.length > 0 ?
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Nombre</TableCell>
-            <TableCell>Precio</TableCell>
-            <TableCell>Descripción</TableCell>
-            <TableCell>Acciones</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {menuItems.map((menuItem, index) => (
-            <TableRow key={index}>
-              <TableCell>{menuItem.name}</TableCell>
-              <TableCell>{menuItem.price}</TableCell>
-              <TableCell>{menuItem.description}</TableCell>
-              <TableCell>
-                <IconButton onClick={() => setMenuItems(menuItems.filter((_, i) => i !== index))}>
-                  <Delete color="error" />
-                </IconButton>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>: null }
+      <MenuItemTable menuItems={menuItems} setMenuItems={setMenuItems} />
       
       <SaveCancelButtons onSave={handleSave} onCancel={onCancel} />
 
