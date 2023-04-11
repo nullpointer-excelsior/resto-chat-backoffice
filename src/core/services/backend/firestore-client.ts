@@ -9,7 +9,7 @@ class FirestoreCLient {
         return this.db
     }
 
-    async addDocument<T extends { [x: string]: any; }>(collectionName: string,document: T) {
+    async addDocument<T extends { [x: string]: any; }>(collectionName: string, document: T) {
         return addDoc(collection(this.db, collectionName), document).then(docRef => docRef.id)
     }
 

@@ -2,7 +2,7 @@ import { Menu } from "./Menu";
 
 
 export interface Restaurant {
-    id: string;
+    id: any;
     accountId: string;
     chatbotName: string;
     restaurantName: string;

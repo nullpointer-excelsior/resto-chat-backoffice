@@ -1,15 +1,10 @@
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { Restaurant } from "../model/Restaurant";
 import { firestoreClient } from "./backend/firestore-client";
-import { Table } from "../model/Table";
 
 const COLLECTION = 'restaurants'
 
 class RestaurantService {
-
-    async findById(id: string) {
-        return await firestoreClient.getDocumentById(COLLECTION, id)
-    }
 
     async findByAccountId(id: string) {
         try {
@@ -25,27 +20,25 @@ class RestaurantService {
         return null
     }
 
-    async create(restaurant: Omit<Restaurant, 'id'>) {
-        const id = restaurant.restaurantName.replaceAll(' ', '-').toLowerCase()
-        const newRestaurant: Restaurant= {
-            id: id,
-            ...restaurant
+    async create(restaurant: Omit<Restaurant, 'id'>): Promise<Restaurant> {        
+        const id = await firestoreClient.addDocument(COLLECTION, restaurant)
+        const created: Restaurant = {
+            ...restaurant,
+            id,
         }
-        const defaultTable: Omit<Table, 'id'> = {
-            restaurantId: id,
-            calletAt: null,
-            isCalling: false,
-            tableNumber: 0
-        }
-        return await firestoreClient.setDocument(COLLECTION, id, restaurant)
-            .then(() => firestoreClient.addDocument('tables', defaultTable))
-            .then(tableId => console.log('Default table added', tableId))
-            .then(() => newRestaurant)
+        return created
     }
 
     async update(restaurant: Restaurant) {
         const id = restaurant.id
-        return await firestoreClient.setDocument(COLLECTION, id, restaurant)
+        const restaurantToUpdate: Omit<Restaurant, 'id'> = {
+            accountId: restaurant.accountId,
+            chatbotName: restaurant.chatbotName,
+            menus: restaurant.menus,
+            menuUrl: restaurant.menuUrl,
+            restaurantName: restaurant.restaurantName
+        }
+        return await firestoreClient.setDocument(COLLECTION, id, restaurantToUpdate).then(() => restaurant)
     }
 }
 
