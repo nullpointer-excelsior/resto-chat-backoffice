@@ -1,6 +1,5 @@
 import { Restaurant } from "../model/Restaurant";
 import { restaurantService } from "../services/RestaurantService";
-import { tableService } from "../services/TableService";
 
 
 export async function CreateOrUpdateRestaurant(restaurant: Restaurant) {
@@ -18,16 +17,7 @@ export async function CreateOrUpdateRestaurant(restaurant: Restaurant) {
         menuUrl: restaurant.menuUrl,
         restaurantName: restaurant.restaurantName
     }
-    const restaurantCreated = await restaurantService.create(restaurantToCreate)
-
-    const tableToCreate = {
-        calletAt: new Date(),
-        isCalling: false,
-        restaurantId: restaurantCreated.id,
-        tableNumber: 0
-    }
-    await tableService.create(tableToCreate)
+    
+    return await restaurantService.create(restaurantToCreate)
         
-    return restaurantCreated
-
 }

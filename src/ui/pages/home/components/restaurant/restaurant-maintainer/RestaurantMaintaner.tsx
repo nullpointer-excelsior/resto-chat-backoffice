@@ -4,7 +4,6 @@ import useRestaurantState from '../../../../../../state/hooks/useRestaurantState
 import { Menu } from '../../../../../../core/model/Menu';
 import ProductMaintainer from './ProductMaintainer';
 import SaveCancelButtons from '../../../../../shared/components/SaveCancelButtons';
-import { restaurantService } from '../../../../../../core/services/RestaurantService';
 import { useNotification } from '../../../../../shared/context/NotificationContext';
 import MenuList from './MenuList';
 import { Restaurant } from '../../../../../../core/model/Restaurant';
@@ -132,7 +131,7 @@ export default function RestaurantMaintainer() {
           <TextField value={restaurantName} onChange={handleRestaurantNameChange} error={handleOnErrorRestaurantName()} fullWidth label="Nombre Restaurant" name="restaurantName" margin="normal" size="small" required  />
         </Box>
         <Box display="flex" gap={4}>
-          <TextField value={menuUrl} onChange={handleMenuUrlChange} error={handleOnErrorMenuUrl()} fullWidth label="Enlace Menu digital" name="menuUrl" margin="normal" size="small" required helperText='Ejemplo: https://my-web-page.com/menu'/>
+          <TextField value={menuUrl} onChange={handleMenuUrlChange} error={handleOnErrorMenuUrl()} fullWidth label="Enlace Menu digital" name="menuUrl" margin="normal" size="small" required helperText='Ejemplo: www.mi-restaurant.com/menu'/>
         </Box>
         <Divider sx={{ marginY: 4}}/> 
         <Typography color="primary" variant="h5" gutterBottom sx={{ marginTop: 4, marginBottom: 4}}>
