@@ -33,7 +33,7 @@ const GoogleSignInButton = () => {
 
     setAccount(account)
     setToken(token)
-    navigate("/home")
+    navigate("/home/dashboard")
     
   };
 

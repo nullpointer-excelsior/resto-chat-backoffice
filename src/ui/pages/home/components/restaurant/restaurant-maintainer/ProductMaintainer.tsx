@@ -3,7 +3,7 @@ import { TextField, Button, Typography, Box, Divider } from '@mui/material';
 import { Menu } from '../../../../../../core/model/Menu';
 import AddIcon from '@mui/icons-material/Add';
 import SaveCancelButtons from '../../../../../shared/components/SaveCancelButtons';
-import MenuItemTable from './MenuItemTable';
+import ProductTable from './ProductTable';
 
 interface Props {
   menu: Menu;
@@ -17,7 +17,7 @@ interface MenuItem {
   description: string;
 }
 
-export default function MenuItemMaintainer(props: Props) {
+export default function ProductMaintainer(props: Props) {
 
   const { menu, onSave, onCancel } = props
 
@@ -48,11 +48,10 @@ export default function MenuItemMaintainer(props: Props) {
       <Typography variant="h6" gutterBottom sx={{ marginTop: 4, marginBottom: 4}}>
         Productos de la categoria {menu.category}
       </Typography>
-
       <Box component="form" onSubmit={handleFormSubmit} display="flex" flexDirection="column">
         <Box display="flex" gap={4}>
           <TextField label="Nombre" name="name" value={formState.name} onChange={handleInputChange} margin="normal" size="small" required sx={{ width: '60%' }} />
-          <TextField label="Precio" name="price" value={formState.price} onChange={handleInputChange} margin="normal" size="small" required sx={{ width: '40%' }}  />
+          <TextField label="Precio" name="price" value={formState.price} onChange={handleInputChange} type="number" margin="normal" size="small" required sx={{ width: '40%' }}  />
         </Box>
         <Box display="flex" gap={2} alignItems="center">
           <TextField label="Descripción" name="description" value={formState.description} onChange={handleInputChange} margin="normal" size="small" multiline sx={{ width: '80%', height: '100%' }}  />
@@ -61,13 +60,9 @@ export default function MenuItemMaintainer(props: Props) {
           </Button>
         </Box>
       </Box>
-
       <Divider sx={{ marginY: 4}}/> 
-
-      <MenuItemTable menuItems={menuItems} setMenuItems={setMenuItems} />
-      
+      <ProductTable menuItems={menuItems} setMenuItems={setMenuItems} />
       <SaveCancelButtons onSave={handleSave} onCancel={onCancel} />
-
     </>
   );
 }

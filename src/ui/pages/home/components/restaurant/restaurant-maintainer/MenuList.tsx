@@ -29,7 +29,6 @@ export default function MenuList({ menus, onAddProduct, onRemoveCategory }) {
                                     <EditIcon color="success" />
                                 </IconButton>
                             </Tooltip>
-                             
                         </TableCell>
                         <TableCell>
                             <Tooltip title="Eliminar categoría">

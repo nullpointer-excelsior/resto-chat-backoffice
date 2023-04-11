@@ -1,9 +1,15 @@
 import { Box, Button } from '@mui/material';
 
-export default function SaveCancelButtons({ onSave, onCancel }) {
+interface Props {
+  onSave: () => void; 
+  onCancel: () => void;
+  disabled?: boolean;
+}
+
+export default function SaveCancelButtons({ onSave, onCancel, disabled }: Props) {
   return (
     <Box display="flex" justifyContent="center" sx={{ marginY: 4 }}>
-      <Button variant="contained" onClick={onSave} sx={{ marginRight: '10px' }}>Guardar</Button>
+      <Button disabled={disabled} variant="contained" onClick={onSave} sx={{ marginRight: '10px' }}>Guardar</Button>
       <Button color="secondary" variant="outlined" onClick={onCancel}>Cancelar</Button>
     </Box>
   );

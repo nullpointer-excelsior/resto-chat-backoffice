@@ -5,11 +5,10 @@ import HomePage from './ui/pages/home/HomePage';
 import AuthenticatedRoute from './ui/shared/routing/components/AuthenticatedRoute';
 import { Provider } from 'react-redux'
 import { store } from './state/store';
-import RestaurantMaintainer from './ui/pages/home/components/restaurant-maintainer/RestaurantMaintainer';
 import { NotificationProvider } from './ui/shared/context/NotificationContext';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Dashboard } from "./ui/pages/home/components/dashboard/Dashboard";
-import { MenuPage } from "./ui/pages/home/components/menu/MenuPage";
+import { RestaurantPage } from "./ui/pages/home/components/restaurant/RestaurantPage";
 
 // declare module '@mui/material/styles' {
 //   interface Theme {
@@ -49,43 +48,48 @@ export const theme = createTheme({
     },
 });
 
-
-
-function App() {
+function HomeAuthenticated() {
   return (
-    
-    <div className="App">
+    <AuthenticatedRoute>
+      <HomePage />
+    </AuthenticatedRoute>
+  )
+}
+
+function RestaurantAuthenticated() {
+  return (
+    <AuthenticatedRoute>
+      <RestaurantPage />
+    </AuthenticatedRoute>
+  )
+}
+
+function DashboardAuthenticated() {
+  return (
+    <AuthenticatedRoute>
+      <Dashboard/>
+    </AuthenticatedRoute>
+  )
+}
+
+export default function App() {
+  return (
+    <div>
       <ThemeProvider theme={theme}>
         <Provider store={store}>
-          
             <NotificationProvider>
               <BrowserRouter>
                 <Routes>
                   <Route path="/" element={<LoginPage />} errorElement={<NotFoundPage/>} />
-                  <Route path="/home" element={
-                    <AuthenticatedRoute>
-                      <HomePage />
-                    </AuthenticatedRoute>
-                  } >
-                    <Route path="restaurant" element={<RestaurantMaintainer/>}></Route>
-                    <Route path="menu" element={
-                      <AuthenticatedRoute>
-                        <MenuPage/>
-                      </AuthenticatedRoute>
-                   }></Route>
-                    **<Route path="dashboard" element={
-                      <AuthenticatedRoute>
-                        <Dashboard/>
-                      </AuthenticatedRoute>
-                    }></Route>**
+                  <Route path="/home" element={<HomeAuthenticated/>} >
+                    <Route path="restaurant" element={<RestaurantAuthenticated/>}></Route>
+                  **<Route path="dashboard" element={<DashboardAuthenticated/>}></Route>**
                   </Route>
                 </Routes>
               </BrowserRouter>
             </NotificationProvider>
         </Provider>
-    </ThemeProvider>
+      </ThemeProvider>
     </div>
   );
 }
-
-export default App;

@@ -2,33 +2,38 @@ import { useState } from 'react';
 import { TextField, Button, Box, Divider, Typography } from '@mui/material';
 import useRestaurantState from '../../../../../../state/hooks/useRestaurantState';
 import { Menu } from '../../../../../../core/model/Menu';
-import MenuItemMaintainer from './MenuItemMaintainer';
+import ProductMaintainer from './ProductMaintainer';
 import SaveCancelButtons from '../../../../../shared/components/SaveCancelButtons';
 import { restaurantService } from '../../../../../../core/services/RestaurantService';
 import { useNotification } from '../../../../../shared/context/NotificationContext';
 import MenuList from './MenuList';
+import { Restaurant } from '../../../../../../core/model/Restaurant';
+import { CreateOrUpdateRestaurant } from '../../../../../../core/application/CreateOrUpdateRestaurant';
 
-interface Props {
-  menus: Menu[]
-}
 
-export default function MenuMaintainer(props: Props) {
+export default function RestaurantMaintainer() {
 
-  const { menus: menuState } = props
-  const { updateMenu, restaurant } = useRestaurantState()
+  const { restaurant, updateRestaurant } = useRestaurantState()
   const { showNotification } = useNotification()
   // restaurant info
-  const [restaurantName, setRestaurantName] = useState('')
-  const [menuUrl, setMenuUrl] = useState('')
+  const [restaurantName, setRestaurantName] = useState(String(restaurant.restaurantName))
+  const [menuUrl, setMenuUrl] = useState(String(restaurant.menuUrl))
   // menus
   const [categoryName, setCategoryName] = useState('');
-  const [menus, setMenus] = useState<Menu[]>([...menuState]);
-  const [initialMenu, setInitialState] = useState<Menu[]>([...menuState]);
+  const [menus, setMenus] = useState<Menu[]>([...restaurant.menus]);
   // menuitems
   const [menuToUpdate, setMenuToUpdate] = useState<Menu>(null)
 
-  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCategoryNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCategoryName(event.target.value);
+  };
+
+  const handleRestaurantNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRestaurantName(event.target.value);
+  };
+
+  const handleMenuUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setMenuUrl(event.target.value);
   };
 
   const handleAddCategory = () => {
@@ -53,22 +58,41 @@ export default function MenuMaintainer(props: Props) {
     setMenus(newMenu)
   }
 
-  const handleOnSaveMenuItem = (menu: Menu) => {
+  const handleOnSaveProduct = (menu: Menu) => {
     const newMenus = menus.filter(m => m.category !== menu.category)
     setMenus([ ...newMenus, menu ])
     setMenuToUpdate(null)
   }
 
-  const handleOnCancelMenuItem = () => {
+  const handleOnCancelProduct = () => {
     setMenuToUpdate(null)
   }
 
+  const handleOnErrorRestaurantName = () => {
+    if (restaurant.id == null) {
+      return false
+    }
+    return restaurantName === ''
+  }
 
-  const handleOnSaveMenu = () => {
-    restaurantService.update(restaurant)
-      .then(() => {
-        updateMenu(menus)
-        setInitialState([...restaurant.menus])
+  const handleOnErrorMenuUrl = () => {
+    if (restaurant.id == null) {
+      return false
+    }
+    return menuUrl === ''
+  }
+
+  const handleOnSaveRestaurant = () => {
+    const restaurantToSave: Restaurant = { 
+      ...restaurant,
+      restaurantName: restaurantName,
+      menuUrl: menuUrl, 
+      menus: menus
+    }
+    CreateOrUpdateRestaurant(restaurantToSave)
+      .then(restaurantCreated => {
+        console.log('update-state', restaurantCreated)
+        updateRestaurant(restaurantCreated)
         showNotification({
           severity: 'success',
           title: 'Successful',
@@ -87,50 +111,45 @@ export default function MenuMaintainer(props: Props) {
     
   }
 
-  const handleOnCancelSaveMenu = () => {
-    // console.log('reset state', initialMenu)
-    setMenus([ ...initialMenu ])
-    // updateMenu(initialMenu)
+  const handleOnCancelRestaurant = () => {
+    setMenus([ ...restaurant.menus ])
+    setRestaurantName(String(restaurant.restaurantName))
+    setMenuUrl(String(restaurant.menuUrl))
+  }
+
+  const validateForm = () => {
+    return restaurantName !== '' && menuUrl !== ''
   }
 
 
   if (!menuToUpdate) {
     return (
       <>
-      {/* restaurant info */}
         <Typography color="primary" variant="h5" gutterBottom sx={{ marginTop: 4, marginBottom: 4}}>
           Información de Restaurant 
         </Typography>
         <Box display="flex" gap={4}>
-          <TextField fullWidth label="Nombre Restaurant" name="restaurantName" margin="normal" size="small" required />
+          <TextField value={restaurantName} onChange={handleRestaurantNameChange} error={handleOnErrorRestaurantName()} fullWidth label="Nombre Restaurant" name="restaurantName" margin="normal" size="small" required  />
         </Box>
         <Box display="flex" gap={4}>
-          <TextField fullWidth label="Enlace Menu digital" name="menuUrl" margin="normal" size="small" required  placeholder='Ejemplo: https://my-web-page.com/menu'/>
+          <TextField value={menuUrl} onChange={handleMenuUrlChange} error={handleOnErrorMenuUrl()} fullWidth label="Enlace Menu digital" name="menuUrl" margin="normal" size="small" required helperText='Ejemplo: https://my-web-page.com/menu'/>
         </Box>
         <Divider sx={{ marginY: 4}}/> 
-        {/* menu */}
         <Typography color="primary" variant="h5" gutterBottom sx={{ marginTop: 4, marginBottom: 4}}>
           Menus 
         </Typography>
         <Box display="flex" alignItems="center">
-          <TextField fullWidth label="Nombre de categoría" size="small" value={categoryName} onChange={handleNameChange} />
+          <TextField fullWidth label="Nombre de categoría" size="small" value={categoryName} onChange={handleCategoryNameChange} />
           <Button disabled={categoryName.length === 0} variant="contained" sx={{ marginLeft: '16px' }} onClick={handleAddCategory}>Agregar</Button>
         </Box>
-
         <Divider sx={{ marginY: 4}}/>      
-
         <MenuList onAddProduct={handleAddProduct} menus={menus} onRemoveCategory={handleRemoveCategory} />
-
         <Divider sx={{ marginY: 4}}/>  
-        
-        <SaveCancelButtons onSave={handleOnSaveMenu} onCancel={handleOnCancelSaveMenu} />
-        
+        <SaveCancelButtons disabled={!validateForm()} onSave={handleOnSaveRestaurant} onCancel={handleOnCancelRestaurant} />
       </>
     )
   }
 
-  return  (
-    <MenuItemMaintainer menu={menuToUpdate} onSave={handleOnSaveMenuItem} onCancel={handleOnCancelMenuItem}/>
-  )
+  return <ProductMaintainer menu={menuToUpdate} onSave={handleOnSaveProduct} onCancel={handleOnCancelProduct}/>
 
 }

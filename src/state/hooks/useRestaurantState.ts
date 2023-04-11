@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux'
-import { MenuPayload, RestaurantState, setRestaurant, updateMenu } from '../slices/restaurant.slice'
+import { MenuPayload, RestaurantState, updateRestaurant, updateMenu, updateAccountId } from '../slices/restaurant.slice'
 import { RootState } from '../store'
 
 export default function useRestaurantState() {
@@ -7,8 +7,9 @@ export default function useRestaurantState() {
     const dispatch = useDispatch()
 
     return {
-        restaurant: useSelector((state: RootState) => state.restaurant) as RestaurantState,
-        setRestaurant: (restaurant: RestaurantState) => dispatch(setRestaurant(restaurant)),
+        restaurant: useSelector((state: RootState) => state.restaurant),
+        updateRestaurant: (restaurant: RestaurantState) => dispatch(updateRestaurant(restaurant)),
+        updateAccountId: (accountId: string) => dispatch(updateAccountId(accountId)),
         updateMenu: (menus: MenuPayload) => dispatch(updateMenu(menus))
     }
     

@@ -1,7 +1,7 @@
 import { Table, TableHead, TableRow, TableCell, TableBody, IconButton } from '@mui/material';
 import { Delete } from '@mui/icons-material';
 
-export default function MenuItemTable({ menuItems, setMenuItems }) {
+export default function ProductTable({ menuItems, setMenuItems }) {
 
     if (menuItems.length === 0) {
         return <p style={{ textAlign: 'center'}}>No hay categorias</p>
