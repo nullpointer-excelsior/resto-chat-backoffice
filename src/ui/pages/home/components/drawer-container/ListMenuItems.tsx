@@ -25,6 +25,12 @@ export default function ListMenuItems() {
         </ListItemIcon>
           <ListItemText primary="My Restaurant" />
       </ListItemButton>
+      <ListItemButton onClick={() => navigate('/home/qr')}>
+        <ListItemIcon>
+          <RestaurantIcon color="secondary" />
+        </ListItemIcon>
+          <ListItemText primary="Códigos QR" />
+      </ListItemButton>
     </React.Fragment>
   )
 };

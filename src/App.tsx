@@ -9,6 +9,7 @@ import { NotificationProvider } from './ui/shared/context/NotificationContext';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Dashboard } from "./ui/pages/home/components/dashboard/Dashboard";
 import { RestaurantPage } from "./ui/pages/home/components/restaurant/RestaurantPage";
+import QrPage from "./ui/pages/home/components/qr/QrPage";
 
 // declare module '@mui/material/styles' {
 //   interface Theme {
@@ -72,9 +73,17 @@ function DashboardAuthenticated() {
   )
 }
 
+function QrChatsAuthenticated() {
+  return (
+    <AuthenticatedRoute>
+      <QrPage/>
+    </AuthenticatedRoute>
+  )
+}
+
 export default function App() {
   return (
-    <div>
+    <>
       <ThemeProvider theme={theme}>
         <Provider store={store}>
             <NotificationProvider>
@@ -82,14 +91,15 @@ export default function App() {
                 <Routes>
                   <Route path="/" element={<LoginPage />} errorElement={<NotFoundPage/>} />
                   <Route path="/home" element={<HomeAuthenticated/>} >
-                    <Route path="restaurant" element={<RestaurantAuthenticated/>}></Route>
                   **<Route path="dashboard" element={<DashboardAuthenticated/>}></Route>**
+                    <Route path="restaurant" element={<RestaurantAuthenticated/>}></Route>
+                    <Route path="qr" element={<QrChatsAuthenticated/>}></Route>
                   </Route>
                 </Routes>
               </BrowserRouter>
             </NotificationProvider>
         </Provider>
       </ThemeProvider>
-    </div>
+    </>
   );
 }
