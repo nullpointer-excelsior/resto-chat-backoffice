@@ -32,6 +32,10 @@ export default function QrMainChat() {
         setOpen(true);
     };
 
+    if (!restaurant.menuUrl) {
+        return <p style={{ textAlign: 'center'}}>No una dirección web del menu especificada</p>
+    }
+    
     return (
         <Box textAlign="center" >
             <Box textAlign="center" >

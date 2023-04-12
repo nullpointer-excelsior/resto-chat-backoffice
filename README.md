@@ -32,10 +32,11 @@ npm run start
 
 ## TODO
 
-- [ ] validaciones, textos en inputs de formularios
+- [] validaciones, textos en inputs de formularios
 - [ ] Mantenedor mesas
 - [ ] dashboard llamado mesas
 - [ ] despligue cloud
 - [ ] mantener sesion con google
-- [ ] mejorar mantenedor restaurant
-- [ ] achicar letra para mas espacion en formularios
+- [x] mejorar mantenedor restaurant
+- [x] achicar letra para mas espacion en formularios
+- [ ] qr de chat por defecto

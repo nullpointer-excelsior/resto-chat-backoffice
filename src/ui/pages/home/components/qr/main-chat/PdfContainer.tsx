@@ -1,4 +1,6 @@
 import { Page, Text, View, Document, StyleSheet, Image, PDFViewer } from "@react-pdf/renderer";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../../../state/store";
 
 // Create styles for pdf renderer
 const styles = StyleSheet.create({
@@ -9,7 +11,7 @@ const styles = StyleSheet.create({
         padding: 10
     },
     tableText: {
-        width: '50%',
+        // width: '50%',
         padding: 15,
         backgroundColor: '#aa2e25',
         color: '#b9f6ca',
@@ -38,7 +40,10 @@ const styles = StyleSheet.create({
     }
 });
 
-export default function PdfContainer({  source }) {
+export default function PdfContainer({ source }) {
+
+    const { restaurant } = useSelector((state: RootState) => state)
+
     return (
         <PDFViewer width={600} height={500}>
             <Document>
@@ -49,11 +54,11 @@ export default function PdfContainer({  source }) {
                                 <Text>MC</Text>
                             </View> */}
                             <View style={styles.tableText} >
-                                <Text>Table Nº </Text>
+                                <Text>{restaurant.restaurantName}</Text>
                             </View>
                         </View>
                         <Image style={styles.qrSection} source={source}></Image>
-                        <Text style={styles.about}>www.menu-caller.cl</Text>
+                        {/* <Text style={styles.about}>www.menu-caller.cl</Text> */}
                     </View>
                 </Page>
             </Document>
