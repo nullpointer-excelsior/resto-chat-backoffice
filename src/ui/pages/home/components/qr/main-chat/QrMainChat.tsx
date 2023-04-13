@@ -5,6 +5,7 @@ import SubTitle from "../../../../../shared/components/SubTitle";
 import { Box, Button, Dialog, Typography } from "@mui/material";
 import { useState } from "react";
 import PdfContainer from "./PdfContainer";
+import GetChatbotUrl from "../../../../../../core/application/GetChatbotUrl";
 
 const generateSource = (url) => {
     const qr = new QRious({
@@ -22,7 +23,7 @@ export default function QrMainChat() {
 
     const { restaurant } = useSelector((state: RootState) => state)
     const [open, setOpen] = useState(false);
-    const source = generateSource(`https://resto-bot-47670.web.app/restaurant/${restaurant.id}`)
+    const source = generateSource(GetChatbotUrl(restaurant.id))
 
     const handleClose = () => {
         setOpen(false);

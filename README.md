@@ -8,7 +8,7 @@ Aplicacion gestion restaurant y menu y llamados
 * React
 * Material UI
 * Firebase
-* Fromik
+* Formik
 
 
 ## Ejecutar la aplicaion
@@ -32,11 +32,12 @@ npm run start
 
 ## TODO
 
-- [] validaciones, textos en inputs de formularios
+- [x] validaciones, textos en inputs de formularios
+- [x] leer variables de entorno
 - [ ] Mantenedor mesas
 - [ ] dashboard llamado mesas
 - [ ] despligue cloud
 - [ ] mantener sesion con google
 - [x] mejorar mantenedor restaurant
 - [x] achicar letra para mas espacion en formularios
-- [ ] qr de chat por defecto
+- [x] qr de chat por defecto
